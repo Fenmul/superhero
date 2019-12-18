@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 
+ *
  * @Title: NEXTJSONResult.java
  * @Package com.next.utils
  * @Description: 自定义响应数据结构
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 				556: 用户qq校验异常
  * @Copyright: Copyright (c) 2016
  * @Company: Nathan.Lee.Salvatore
- * 
+ *
  * @author Chacky
  * @date 2019年01月01日 下午12:12:12
  * @version V1.0
@@ -37,7 +37,7 @@ public class NEXTJSONResult {
 
     // 响应中的数据
     private Object data;
-    
+
     @JsonIgnore
     private String ok;	// 不使用
 
@@ -48,7 +48,7 @@ public class NEXTJSONResult {
     public static NEXTJSONResult build(Integer status, String msg, Object data, String ok) {
         return new NEXTJSONResult(status, msg, data, ok);
     }
-    
+
     public static NEXTJSONResult ok(Object data) {
         return new NEXTJSONResult(data);
     }
@@ -56,23 +56,23 @@ public class NEXTJSONResult {
     public static NEXTJSONResult ok() {
         return new NEXTJSONResult(null);
     }
-    
+
     public static NEXTJSONResult errorMsg(String msg) {
         return new NEXTJSONResult(500, msg, null);
     }
-    
+
     public static NEXTJSONResult errorMap(Object data) {
         return new NEXTJSONResult(501, "error", data);
     }
-    
+
     public static NEXTJSONResult errorTokenMsg(String msg) {
         return new NEXTJSONResult(502, msg, null);
     }
-    
+
     public static NEXTJSONResult errorException(String msg) {
         return new NEXTJSONResult(555, msg, null);
     }
-    
+
     public static NEXTJSONResult errorUserQQ(String msg) {
         return new NEXTJSONResult(556, msg, null);
     }
@@ -86,7 +86,7 @@ public class NEXTJSONResult {
         this.msg = msg;
         this.data = data;
     }
-    
+
     public NEXTJSONResult(Integer status, String msg, Object data, String ok) {
         this.status = status;
         this.msg = msg;
@@ -128,12 +128,12 @@ public class NEXTJSONResult {
         this.data = data;
     }
 
-	public String getOk() {
-		return ok;
-	}
+    public String getOk() {
+        return ok;
+    }
 
-	public void setOk(String ok) {
-		this.ok = ok;
-	}
+    public void setOk(String ok) {
+        this.ok = ok;
+    }
 
 }
