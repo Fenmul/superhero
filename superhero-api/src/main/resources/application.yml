@@ -17,7 +17,7 @@ spring:
   datasource:                                             ## 数据源的相关配置
     type: com.zaxxer.hikari.HikariDataSource              # 数据源 HikariCP
     driver-class-name: com.mysql.jdbc.Driver              # mysql驱动
-    url: jdbc:mysql://192.168.1.3:3306/next-superhero-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/next-superhero-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=true
     username: root
     password: root               # 本地数据库
     hikari:
@@ -61,7 +61,7 @@ mybatis:
 ############################################################
 # 通用 Mapper 配置
 mapper:
-  mappers: com.next.my.com.next.mapper.MyMapper
+  mappers: com.next.mymapper.MyMapper
   not-empty: false
   identity: MYSQL
 # 分页插件配置
