@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface CarouselService {
 
-    public List queryAll();
+    List queryAll();
 }
