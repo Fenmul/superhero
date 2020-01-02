@@ -39,4 +39,10 @@ public class MovieServiceImpl implements MovieService {
         PageHelper.startPage(page, pageSize);
         return movieMapper.selectByExample(example);
     }
+
+    @Override
+    public Integer queryAllTrailerCounts() {
+        // 查询所有的电影，直接传入空对象即可
+        return movieMapper.selectCount(new Movie());
+    }
 }

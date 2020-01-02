@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +28,15 @@ public class IndexController {
     @PostMapping("/carousel/list")
     public NEXTJSONResult queryAll(){
         return NEXTJSONResult.ok(carouselService.queryAll());
+    }
+
+    @ApiOperation(value="猜你喜欢", notes="随机获得预告片的列表", httpMethod = "POST")
+    @PostMapping("/guessULike")
+    public NEXTJSONResult guessULike(){
+        // 1. 查询出电影总数
+        Integer counts = movieService.queryAllTrailerCounts();
+        // 2. 取出 5 个随机数
+        return NEXTJSONResult.ok(counts);
     }
 
     @ApiOperation(value="热门超英/预告片", notes="获取热门超英/预告片列表", httpMethod = "GET")

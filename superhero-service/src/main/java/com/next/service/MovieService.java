@@ -12,4 +12,11 @@ public interface MovieService {
      * @return 电影集合
      */
     List<Movie> queryHotSuperHero(String type);
+
+    /**
+     * 查询电影预告表的记录数
+     *
+     * @return 总数
+     */
+    Integer queryAllTrailerCounts();
 }
