@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value="首页", tags={"首页展示的相关接口"})
 @RestController
 @RequestMapping("/index")
-public class IndexController {
+public class IndexController extends BasicController {
     @Autowired
     private CarouselService carouselService;
     @Autowired
@@ -36,7 +36,9 @@ public class IndexController {
         // 1. 查询出电影总数
         Integer counts = movieService.queryAllTrailerCounts();
         // 2. 取出 5 个随机数
-        return NEXTJSONResult.ok(counts);
+        Integer[] randoms = guessULikeArray(counts, 5);
+        // 从 Redis 中取出对应的 movie 对象
+        return NEXTJSONResult.ok(randoms);
     }
 
     @ApiOperation(value="热门超英/预告片", notes="获取热门超英/预告片列表", httpMethod = "GET")
