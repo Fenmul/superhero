@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,15 +24,16 @@ public class IndexController {
     @Autowired
     private MovieService movieService;
 
+    // 前端需要 POST请求
     @ApiOperation(value="获取首页轮播图列表", notes="获取首页轮播图列表", httpMethod = "POST")
-    @GetMapping("/carousel/list")
+    @PostMapping("/carousel/list")
     public NEXTJSONResult queryAll(){
         return NEXTJSONResult.ok(carouselService.queryAll());
     }
 
     @ApiOperation(value="热门超英/预告片", notes="获取热门超英/预告片列表", httpMethod = "GET")
     @ApiImplicitParam(name = "type", value = "超英(superhero)/预告(trailer)", required = true, dataType = "string", paramType = "query")
-    @GetMapping("/movie/hot")
+    @PostMapping("/movie/hot")
     public NEXTJSONResult queryHotSuperHero(@RequestParam("type") String type){
         if (StringUtils.isBlank(type)) {
             NEXTJSONResult.errorMsg("参数不能为空");
