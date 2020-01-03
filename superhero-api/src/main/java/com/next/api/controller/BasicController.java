@@ -1,10 +1,15 @@
 package com.next.api.controller;
 
+import com.next.redis.RedisOperator;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BasicController {
+
+    @Autowired
+    protected RedisOperator redis;
 
     /**
      * 返回 size 个 count 内的随机整数

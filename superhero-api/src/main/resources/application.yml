@@ -29,15 +29,15 @@ spring:
       pool-name: DatebookHikariCP     # 连接池名字
       max-lifetime: 28740000          # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms，建议设置比数据库超时时长少60秒，参考MySQL wait_timeout参数（show variables like '%timeout%';） -->
       connection-test-query: SELECT 1
-#  redis:                  # Redis 的配置
-#    database: 0           # Redis 的数据库下标（索引，默认为0）
-#    host: 192.168.1.61    # 本地Redis服务的内网IP（分布式环境，必须保证内网互通，并且在同一个网段）
-#    port: 6379            # 端口
+  redis:                  # Redis 的配置
+    database: 0           # Redis 的数据库下标（索引，默认为0）
+    host: 127.0.0.1    # 本地Redis服务的内网IP（分布式环境，必须保证内网互通，并且在同一个网段）
+    port: 6379            # 端口
 #    password: next        # 密码
-  servlet:
-    multipart:
-      max-file-size: 10485760      # 文件上传配置 限制10m
-      max-request-size: 10485760   # 文件上传配置 限制10m
+#  servlet:
+#    multipart:
+#      max-file-size: 10485760      # 文件上传配置 限制10m
+#      max-request-size: 10485760   # 文件上传配置 限制10m
 #  rabbitmq:
 #    host: 192.168.1.66
 #    port: 5672
