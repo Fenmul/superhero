@@ -21,10 +21,15 @@ public interface MovieService {
      */
     Integer queryAllTrailerCounts();
 
+    /**
+     * 查询全部电影
+     */
     List<Movie> queryAllMovies();
 
     /**
      * 根据关键字查询分页
      */
     JqGridResult searchTrailer(String keywords, Integer page, Integer pageSize);
+
+    Movie queryMovieById(String id);
 }

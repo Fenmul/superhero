@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.next.mapper.StaffMapperCustom" >
+
+    <select id="queryStaffs" parameterType="Object" resultType="com.next.pojo.vo.StaffVO">
+		SELECT
+			sta.id as staffId,
+			sta.`name` as name,
+			sta.sex as sex,
+			sta.photo as photo,
+			rel.role as role,
+			rel.act_name as actName
+		FROM
+			staff_movie rel
+		LEFT JOIN
+			staff sta
+		on
+			rel.staff_id = sta.id
+		WHERE
+			rel.movie_id = #{trailerId}
+		AND
+			rel.role = #{role}
+	</select>
+
+</mapper>

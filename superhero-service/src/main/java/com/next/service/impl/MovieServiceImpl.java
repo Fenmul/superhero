@@ -81,4 +81,10 @@ public class MovieServiceImpl implements MovieService {
         jqGridResult.setRecords(pagedMovies.getTotal());
         return jqGridResult;
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public Movie queryMovieById(String id) {
+        return movieMapper.selectByPrimaryKey(id);
+    }
 }
