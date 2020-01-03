@@ -45,4 +45,9 @@ public class MovieServiceImpl implements MovieService {
         // 查询所有的电影，直接传入空对象即可
         return movieMapper.selectCount(new Movie());
     }
+
+    @Override
+    public List<Movie> queryAllMovies() {
+        return movieMapper.selectAll();
+    }
 }

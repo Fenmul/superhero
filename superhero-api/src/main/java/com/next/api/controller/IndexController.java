@@ -1,8 +1,11 @@
 package com.next.api.controller;
 
 
+import com.google.common.collect.Lists;
+import com.next.pojo.Movie;
 import com.next.service.CarouselService;
 import com.next.service.MovieService;
+import com.next.utils.JsonUtils;
 import com.next.utils.NEXTJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Api(value="首页", tags={"首页展示的相关接口"})
 @RestController
@@ -38,7 +43,11 @@ public class IndexController extends BasicController {
         // 2. 取出 5 个随机数
         Integer[] randoms = guessULikeArray(counts, 5);
         // 从 Redis 中取出对应的 movie 对象
-        return NEXTJSONResult.ok(randoms);
+        List<Movie> guessULikeMovies = Lists.newArrayListWithCapacity(5);
+        for (Integer i : randoms) {
+            guessULikeMovies.add(JsonUtils.jsonToPojo(redis.get("guess-trailer-id:" + i), Movie.class));
+        }
+        return NEXTJSONResult.ok(guessULikeMovies);
     }
 
     @ApiOperation(value="热门超英/预告片", notes="获取热门超英/预告片列表", httpMethod = "GET")

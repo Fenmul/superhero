@@ -19,4 +19,6 @@ public interface MovieService {
      * @return 总数
      */
     Integer queryAllTrailerCounts();
+
+    List<Movie> queryAllMovies();
 }
