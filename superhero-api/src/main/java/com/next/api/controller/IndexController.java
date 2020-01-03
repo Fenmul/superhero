@@ -50,7 +50,7 @@ public class IndexController extends BasicController {
         return NEXTJSONResult.ok(guessULikeMovies);
     }
 
-    @ApiOperation(value="热门超英/预告片", notes="获取热门超英/预告片列表", httpMethod = "GET")
+    @ApiOperation(value="热门超英/预告片", notes="获取热门超英/预告片列表", httpMethod = "POST")
     @ApiImplicitParam(name = "type", value = "超英(superhero)/预告(trailer)", required = true, dataType = "string", paramType = "query")
     @PostMapping("/movie/hot")
     public NEXTJSONResult queryHotSuperHero(@RequestParam("type") String type){
