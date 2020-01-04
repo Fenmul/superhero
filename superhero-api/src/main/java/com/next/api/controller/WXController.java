@@ -6,6 +6,7 @@ import com.next.api.config.WXConfig;
 import com.next.pojo.Users;
 import com.next.pojo.bo.MPWXUserBO;
 import com.next.pojo.bo.WXSessionBO;
+import com.next.pojo.vo.UsersVO;
 import com.next.service.UserService;
 import com.next.utils.HttpClientUtils;
 import com.next.utils.JsonUtils;
@@ -15,10 +16,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 @Api(value="微信相关控制器", tags={"微信小程序登录"})
 @RestController
@@ -53,7 +56,16 @@ public class WXController extends BasicController {
         if (user == null) {
             user = userService.saveUserMPWX(wxSessionBO.getOpenid(), mpwxUserBO);
         }
-        return NEXTJSONResult.ok();
+
+        // 会话建立前后端的联系
+        // 实现用户分布式会话，创建一个 Token 保存在 redis 中，可以被任意集群节点访问
+        String uniqueToken = UUID.randomUUID().toString().trim();
+        redis.set(REDIS_UNIQUE_TOKEN +":"+user.getId(), uniqueToken);
+        UsersVO usersVO = new UsersVO();
+        BeanUtils.copyProperties(user, usersVO);
+        usersVO.setUserUniqueToken(uniqueToken);
+
+        return NEXTJSONResult.ok(usersVO);
     }
 
 }

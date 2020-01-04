@@ -11,6 +11,8 @@ public class BasicController {
     @Autowired
     protected RedisOperator redis;
 
+    // 用户登录 token
+    public final static String REDIS_UNIQUE_TOKEN = "redis-unique-token";
     /**
      * 返回 size 个 count 内的随机整数
      * @param count 总数
