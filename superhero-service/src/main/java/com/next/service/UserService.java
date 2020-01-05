@@ -2,6 +2,7 @@ package com.next.service;
 
 import com.next.pojo.Users;
 import com.next.pojo.bo.MPWXUserBO;
+import com.next.pojo.bo.RegistLoginUsersBO;
 
 public interface UserService {
     /**
@@ -18,4 +19,26 @@ public interface UserService {
      * @return 用户信息
      */
     Users saveUserMPWX(String openId, MPWXUserBO mpwxUserBO);
+
+    /**
+     * 查询用户是否存在
+     * @param username 用户名
+     * @return {boolean}
+     */
+    boolean queryUserIsExists(String username);
+
+    /**
+     * 登陆用户「注册用户」
+     * @param registLoginUsersBO 注册用户登陆
+     * @return 登陆用户信息
+     */
+    Users loginRegister(RegistLoginUsersBO registLoginUsersBO) throws Exception;
+
+    /**
+     * 保存注册用户信息
+     * @param registLoginUsersBO 注册用户
+     * @return 注册成功的用户信息
+     */
+    Users saveUserRegister(RegistLoginUsersBO registLoginUsersBO) throws Exception;
+
 }

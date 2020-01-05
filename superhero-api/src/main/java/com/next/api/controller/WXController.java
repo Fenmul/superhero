@@ -57,15 +57,7 @@ public class WXController extends BasicController {
             user = userService.saveUserMPWX(wxSessionBO.getOpenid(), mpwxUserBO);
         }
 
-        // 会话建立前后端的联系
-        // 实现用户分布式会话，创建一个 Token 保存在 redis 中，可以被任意集群节点访问
-        String uniqueToken = UUID.randomUUID().toString().trim();
-        redis.set(REDIS_UNIQUE_TOKEN +":"+user.getId(), uniqueToken);
-        UsersVO usersVO = new UsersVO();
-        BeanUtils.copyProperties(user, usersVO);
-        usersVO.setUserUniqueToken(uniqueToken);
-
-        return NEXTJSONResult.ok(usersVO);
+        return NEXTJSONResult.ok(setToken(user));
     }
 
 }

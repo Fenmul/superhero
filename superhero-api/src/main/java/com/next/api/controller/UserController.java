@@ -1,6 +1,8 @@
 package com.next.api.controller;
 
 
+import com.next.pojo.Users;
+import com.next.pojo.bo.RegistLoginUsersBO;
 import com.next.service.UserService;
 import com.next.utils.NEXTJSONResult;
 import io.swagger.annotations.Api;
@@ -32,4 +34,21 @@ public class UserController extends BasicController {
         return NEXTJSONResult.ok();
     }
 
+
+    @ApiOperation(value="用户注册/登录", notes="用户注册或者用户登录的统一入口", httpMethod = "POST")
+    @ApiImplicitParams({@ApiImplicitParam(name = "registLoginUsersBO", value = "用户对象", required = true, dataType = "RegistLoginUsersBO", paramType = "body")})
+    @PostMapping("/registOrLogin")
+    public NEXTJSONResult registOrLogin(@RequestBody RegistLoginUsersBO registLoginUsersBO) throws Exception {
+        if (StringUtils.isAnyBlank(registLoginUsersBO.getPassword(), registLoginUsersBO.getUsername())) {
+            NEXTJSONResult.errorMsg("用户信息均不能为空");
+        }
+        Users user;
+        boolean userIsExists = userService.queryUserIsExists(registLoginUsersBO.getUsername());
+        if (userIsExists) {
+            user = userService.loginRegister(registLoginUsersBO);
+        } else {
+            user = userService.saveUserRegister(registLoginUsersBO);
+        }
+        return NEXTJSONResult.ok(setToken(user));
+    }
 }
