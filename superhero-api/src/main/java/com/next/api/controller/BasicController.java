@@ -1,5 +1,6 @@
 package com.next.api.controller;
 
+import com.next.api.config.FaceConfig;
 import com.next.pojo.Users;
 import com.next.pojo.vo.UsersVO;
 import com.next.redis.RedisOperator;
@@ -16,6 +17,9 @@ public class BasicController {
 
     @Autowired
     protected RedisOperator redis;
+
+    @Autowired
+    protected FaceConfig faceConfig;
 
     // 用户登录 token
     public final static String REDIS_UNIQUE_TOKEN = "redis-unique-token";

@@ -41,4 +41,11 @@ public interface UserService {
      */
     Users saveUserRegister(RegistLoginUsersBO registLoginUsersBO) throws Exception;
 
+    /**
+     * 更新用户信息
+     * @param user 用户对象
+     * @return 更新完的用户对象
+     */
+    Users updateUserInfo(Users user);
+
 }

@@ -101,4 +101,15 @@ public class UserServiceImpl implements UserService {
         usersMapper.insert(user);
         return user;
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public Users updateUserInfo(Users user) {
+        usersMapper.updateByPrimaryKeySelective(user);
+        return queryUsersByUserId(user.getId());
+    }
+
+    private Users queryUsersByUserId(String userId) {
+        return usersMapper.selectByPrimaryKey(userId);
+    }
 }
