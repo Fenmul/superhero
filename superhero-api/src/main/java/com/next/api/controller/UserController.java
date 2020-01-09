@@ -1,8 +1,8 @@
 package com.next.api.controller;
 
 
-import com.next.api.config.FaceConfig;
 import com.next.pojo.Users;
+import com.next.pojo.bo.ModifiedUserBO;
 import com.next.pojo.bo.RegistLoginUsersBO;
 import com.next.pojo.vo.UsersVO;
 import com.next.service.UserService;
@@ -125,6 +125,50 @@ public class UserController extends BasicController {
         Users resultUser = userService.updateUserInfo(user);
         resultUser.setPassword(null);
         return NEXTJSONResult.ok(conventUsersVO(resultUser));
+    }
+
+    @ApiOperation(value="修改昵称", notes="用户修改账号昵称的接口", httpMethod = "POST")
+    @ApiImplicitParams({@ApiImplicitParam(name = "userId", value = "用户主键id", required = true, dataType = "string", paramType = "query")})
+    @PostMapping("/modifyUserinfo")
+    public NEXTJSONResult modifyUserinfo(@RequestBody ModifiedUserBO userBO){
+
+        String userId = userBO.getUserId();
+        if (StringUtils.isBlank(userId)) {
+            return NEXTJSONResult.errorMsg("用户id不能为空");
+        }
+
+        // 以下三个属性必须至少有一项是不为空的
+        String birthday = userBO.getBirthday();
+        Integer sex = userBO.getSex();
+        String nickname = userBO.getNickname();
+        if (StringUtils.isBlank(birthday) && StringUtils.isBlank(nickname) && sex == null) {
+            return NEXTJSONResult.errorMsg("修改用户信息不能为空");
+        }
+
+        if (sex != null && sex != 0 && sex != 1) {
+            return NEXTJSONResult.errorMsg("性别不正确 - [1:男][0:女]");
+        }
+
+        if (StringUtils.isNotBlank(nickname) && nickname.length() > 12) {
+            return NEXTJSONResult.errorMsg("昵称长度不能超过12位");
+        }
+
+        if (StringUtils.isNotBlank(birthday)) {
+            if (!DateUtil.isValidDate(birthday, DateUtil.ISO_EXPANDED_DATE_FORMAT)) {
+                return NEXTJSONResult.errorMsg("生日日期格式不正确");
+            }
+        }
+
+        // 保存地址到数据库
+        Users user = new Users();
+        user.setId(userId);
+        user.setSex(sex);
+        user.setNickname(nickname);
+        user.setBirthday(birthday);
+        user = userService.updateUserInfo(user);
+        user.setPassword(null);
+
+        return NEXTJSONResult.ok(conventUsersVO(user));
     }
 
     private UsersVO conventUsersVO(Users user) {
