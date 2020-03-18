@@ -6,6 +6,7 @@ import com.next.pojo.vo.UsersVO;
 import com.next.redis.RedisOperator;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,8 @@ public class BasicController {
     @Autowired
     protected FaceConfig faceConfig;
 
+    @Autowired
+    protected RabbitTemplate rabbitTemplate;
     // 用户登录 token
     public final static String REDIS_UNIQUE_TOKEN = "redis-unique-token";
 
